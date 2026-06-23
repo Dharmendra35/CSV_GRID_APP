@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* AG Grid Theme */
+.ag-theme-quartz {
+  --ag-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ag-foreground-color: rgb(31 41 55);
+  --ag-background-color: rgb(255 255 255);
+  --ag-header-background-color: rgb(249 250 251);
+  --ag-header-foreground-color: rgb(31 41 55);
+  --ag-border-color: rgb(229 231 235);
+  --ag-row-hover-color: rgb(243 244 246);
+  --ag-selected-row-background-color: rgb(219 234 254);
+}
+
+.ag-theme-quartz .ag-header-cell {
+  font-weight: 600;
+}
