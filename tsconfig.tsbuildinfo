@@ -1,1 +1,0 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/components/columnselector.tsx","./src/components/datagrid.tsx","./src/components/fileupload.tsx","./src/components/index.ts","./src/types/index.ts","./src/utils/csvparser.ts","./src/utils/gridfilters.ts"],"version":"5.9.3"}
