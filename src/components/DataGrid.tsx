@@ -28,7 +28,7 @@ export const DataGrid: React.FC<DataGridProps> = ({ data, columns, selectedColum
       floatingFilter: true,
     };
 
-    // Configure column type for proper sorting
+    // Configure column type for proper sorting and filtering
     if (column.type === 'number') {
       colDef.type = 'numericColumn';
       colDef.valueGetter = (params) => {
@@ -36,6 +36,10 @@ export const DataGrid: React.FC<DataGridProps> = ({ data, columns, selectedColum
         if (value === '' || value === null || value === undefined) return null;
         const num = Number(value);
         return isNaN(num) ? null : num;
+      };
+      colDef.valueFormatter = (params) => {
+        if (params.value === null || params.value === undefined) return '';
+        return String(params.value);
       };
       colDef.valueParser = (params) => {
         const value = params.newValue;
@@ -59,6 +63,12 @@ export const DataGrid: React.FC<DataGridProps> = ({ data, columns, selectedColum
         suppressAndOrCondition: true,
         maxNumConditions: 1,
         buttons: ['apply', 'reset', 'clear'],
+        allowedCharPattern: '\\d\\-\\.',
+        numberParser: (text: string | null) => {
+          if (text === null || text === undefined || text === '') return null;
+          const num = Number(text);
+          return isNaN(num) ? null : num;
+        },
       };
     } else if (column.filterType === 'date') {
       colDef.filter = 'agDateColumnFilter';
