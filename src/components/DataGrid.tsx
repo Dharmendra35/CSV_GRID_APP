@@ -31,6 +31,12 @@ export const DataGrid: React.FC<DataGridProps> = ({ data, columns, selectedColum
     // Configure column type for proper sorting
     if (column.type === 'number') {
       colDef.type = 'numericColumn';
+      colDef.valueGetter = (params) => {
+        const value = params.data[column.field];
+        if (value === '' || value === null || value === undefined) return null;
+        const num = Number(value);
+        return isNaN(num) ? null : num;
+      };
       colDef.valueParser = (params) => {
         const value = params.newValue;
         return value === '' || value === null || value === undefined ? null : Number(value);

@@ -28,11 +28,18 @@ export const detectColumnType = (values: (string | number)[]): 'number' | 'date'
 
   // Check if all non-empty values are valid numbers
   const allNumbers = samples.every(v => {
-    const num = Number(v);
-    // Exclude values that parse but are actually date-like strings
     const str = String(v).trim();
-    // Don't count pure number strings or scientific notation
-    return !isNaN(num) && str !== '' && !isNaN(parseFloat(str));
+    if (str === '') return false;
+    
+    // Check if it's a pure number (not a date-like string)
+    const num = Number(str);
+    if (isNaN(num)) return false;
+    
+    // Exclude date-like patterns (e.g., "12-01-2023", "01/12/2023")
+    const datePattern = /^\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4}$|^\d{4}[-\/]\d{1,2}[-\/]\d{1,2}$/;
+    if (datePattern.test(str)) return false;
+    
+    return true;
   });
   
   if (allNumbers) return 'number';
