@@ -28,6 +28,24 @@ export const DataGrid: React.FC<DataGridProps> = ({ data, columns, selectedColum
       floatingFilter: true,
     };
 
+    // Configure column type for proper sorting
+    if (column.type === 'number') {
+      colDef.type = 'numericColumn';
+      colDef.valueParser = (params) => {
+        const value = params.newValue;
+        return value === '' || value === null || value === undefined ? null : Number(value);
+      };
+    } else if (column.type === 'date') {
+      colDef.type = 'dateColumn';
+      colDef.valueGetter = (params) => {
+        const value = params.data[column.field];
+        if (!value) return null;
+        const date = new Date(value);
+        return isNaN(date.getTime()) ? null : date;
+      };
+    }
+
+    // Configure filters based on column type
     if (column.filterType === 'number') {
       colDef.filter = 'agNumberColumnFilter';
       colDef.filterParams = {
